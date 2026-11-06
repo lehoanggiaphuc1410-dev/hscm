@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCMUT Smart Campus Map | Bản Đồ Thông Minh Bách Khoa</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#033285">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bk: {
+                            navy: '#0A2540',
+                            darkBlue: '#002147',
+                            blue: '#0284C7',
+                            lightBlue: '#38BDF8',
+                            ice: '#F0F9FF',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    
+    <style>
+        .clean-gradient-text {
+            background: linear-gradient(135deg, #0A2540 0%, #0369A1 60%, #0284C7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 font-sans h-full flex flex-col justify-between selection:bg-sky-100 selection:text-bk-blue">
+
+    <!-- HEADER -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-bk-darkBlue text-white shadow-lg border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- 1. CỤM LOGO (Nằm sát mép trái) -->
+        <div class="flex items-center space-x-3.5 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <div class="w-12 h-12 flex-shrink-0 bg-white rounded-lg p-1 flex items-center justify-center shadow-md">
+                <img src="logo hcmut.png" alt="Logo HCMUT Chuẩn" class="w-full h-full object-contain">
+            </div>
+            <div class="text-left">
+                <span class="text-xl font-extrabold tracking-tight text-white block leading-none">BK CAMPUS MAP</span>
+                <span class="block text-[10px] font-bold uppercase tracking-widest text-sky-400 mt-1">HCMUT Smart Navigation</span>
+            </div>
+        </div>
+
+       
+    </div>
+</header>
+
+    <!-- HERO SECTION -->
+    <main class="relative pt-32 pb-20 lg:pt-36 lg:pb-24 grid-pattern overflow-hidden flex-1 flex items-center bg-gradient-to-b from-white via-bk-ice/40 to-white">
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-sky-200/30 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+            <div class="space-y-6 flex flex-col items-center">
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-bk-navy leading-[1.15]">
+                    Bản đồ thông minh cho <br/>
+                    <span class="clean-gradient-text whitespace-nowrap">sinh viên Bách Khoa</span>
+                </h1>
+
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-sky-50 border border-sky-100 text-bk-blue text-xs font-semibold shadow-sm">
+                    <span class="flex h-2 w-2 rounded-full bg-bk-blue animate-pulse"></span>
+                    <span>Dành riêng cho Sinh viên & Giảng viên HCMUT</span>
+                </div>
+
+                <div class="max-w-xl mx-auto">
+                    <p class="text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
+                        Tra cứu nhanh lớp học và tự động tích hợp thời khóa biểu cá nhân.
+                    </p>
+                </div>
+
+                <!-- KHỐI 2 NÚT ĐĂNG NHẬP -->
+                <div class="w-full max-w-sm mx-auto space-y-3 pt-2">
+                    
+                    <!-- Nút Đăng nhập Google -->
+                    <button id="login-btn" class="w-full py-3.5 px-6 rounded-2xl bg-slate-900 text-white font-semibold text-sm sm:text-base flex items-center justify-center space-x-3 hover:bg-bk-blue transition-all hover:shadow-md hover:shadow-sky-500/20 active:scale-[0.98]">
+                        <span id="google-icon" class="w-5 h-5 flex-shrink-0 flex items-center justify-center bg-white rounded-full p-0.5">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                            </svg>
+                        </span>
+                        <span id="login-text">Đăng nhập với Google</span>
+                    </button>
+
+                    <!-- Nút Chế độ khách -->
+                    <button id="guest-btn" class="group w-full py-3.5 px-6 rounded-2xl bg-slate-900 text-white font-semibold text-sm sm:text-base flex items-center justify-center space-x-3 hover:bg-bk-blue transition-all hover:shadow-md hover:shadow-sky-500/20 active:scale-[0.98]">
+                        <svg class="w-5 h-5 flex-shrink-0 text-slate-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span>Chế độ tham quan</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+<!-- FOOTER -->
+<footer class="bg-white border-t border-slate-200 mt-auto py-3 px-6 w-full">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Bên trái -->
+        <div class="text-xs text-slate-500 font-medium">
+            <span class="font-bold text-bk-blue">BK Smart Campus Map</span> © 2026
+        </div>
+
+      <!-- Ô MAIL LIÊN HỆ CÓ TIÊU ĐỀ & NỘI DUNG TỰ ĐỘNG -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 shadow-sm">
+    <i class="fa-solid fa-envelope text-bk-blue"></i>
+    <span>Liên hệ:</span>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hcmutsmartcampusmap@gmail.com&su=%5BBK%20Smart%20Campus%20Map%5D%20G%C3%B3p%20%C3%BD%20%2F%20H%E1%BB%97%20tr%E1%BB%A3&body=Ch%C3%A0o%20Admin%2C%0A%0AM%C3%ACnh%20mu%E1%BB%91n%20g%C3%B3p%20%C3%BD%20%2F%20b%C3%A1o%20l%E1%BB%97i%20v%E1%BB%81%3A%20" 
+       target="_blank" 
+       class="text-bk-blue font-semibold hover:underline"
+       title="Bấm để gửi Gmail soạn sẵn">
+       hcmutsmartcampusmap@gmail.com
+    </a>
+    <!-- Nút Copy email -->
+    <button onclick="copyEmail('hcmutsmartcampusmap@gmail.com')" 
+            class="ml-1 text-slate-400 hover:text-bk-blue transition cursor-pointer" 
+            title="Sao chép địa chỉ Email">
+        <i class="fa-regular fa-copy"></i>
+    </button>
+</div>
+
+<script>
+    function copyEmail(email) {
+        navigator.clipboard.writeText(email);
+        alert("Đã sao chép địa chỉ email: " + email);
+    }
+</script>
+</footer>
+    <!-- SCRIPT TÍCH HỢP FIREBASE AUTHENTICATION (ĐÃ FIX TOÀN BỘ NÚT BẤM & PERSISTENCE) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXDX98b8p17vrvQu1OVhwIvqtrtKTbel0",
+            authDomain: "hcmut-smart-campus-map.firebaseapp.com",
+            projectId: "hcmut-smart-campus-map",
+            storageBucket: "hcmut-smart-campus-map.firebasestorage.app",
+            messagingSenderId: "881977232661",
+            appId: "1:881977232661:web:db0144004d14a4c116ed1c",
+            measurementId: "G-DCFK06D9CT"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Thiết lập nhớ phiên đăng nhập
+        setPersistence(auth, browserLocalPersistence).catch((error) => {
+            console.error("Lỗi Auth Persistence:", error);
+        });
+
+        const provider = new GoogleAuthProvider();
+
+        // 1. CHỈ TỰ ĐỘNG CHUYỂN TRANG NẾU ĐÃ ĐĂNG NHẬP VÀ ĐANG Ở CHẾ ĐỘ AUTHENTICATED
+        onAuthStateChanged(auth, (user) => {
+            if (user && localStorage.getItem('bk_user_mode') === 'authenticated') {
+                window.location.replace('choncoso.html');
+            }
+        });
+
+        // 2. XỬ LÝ NÚT ĐĂNG NHẬP GOOGLE
+        const loginBtn = document.getElementById('login-btn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', async () => {
+                const icon = document.getElementById('google-icon');
+                const text = document.getElementById('login-text');
+                const originalIconHtml = icon ? icon.innerHTML : '';
+                
+                if (text) text.innerText = 'Đang kiểm tra phiên...';
+                if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-lg text-white"></i>';
+                loginBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                loginBtn.disabled = true;
+
+                // Nếu đã có thông tin user từ trước
+                if (auth.currentUser) {
+                    localStorage.setItem('bk_user_mode', 'authenticated');
+                    localStorage.setItem('bk_user_info', JSON.stringify({
+                        name: auth.currentUser.displayName,
+                        email: auth.currentUser.email,
+                        avatar: auth.currentUser.photoURL
+                    }));
+                    window.location.replace('choncoso.html');
+                    return;
+                }
+
+                // Mở Popup Google nếu chưa có phiên
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+                    localStorage.setItem('bk_user_mode', 'authenticated');
+                    localStorage.setItem('bk_user_info', JSON.stringify({
+                        name: user.displayName,
+                        email: user.email,
+                        avatar: user.photoURL
+                    }));
+                    window.location.replace('choncoso.html');
+                } catch (error) {
+                    if (text) text.innerText = 'Đăng nhập với Google';
+                    if (icon) icon.innerHTML = originalIconHtml;
+                    loginBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    loginBtn.disabled = false;
+                    
+                    if (error.code !== 'auth/popup-closed-by-user') {
+                        console.error("Lỗi đăng nhập:", error);
+                        alert("Đăng nhập thất bại. Vui lòng thử lại!");
+                    }
+                }
+            });
+        }
+
+        // 3. XỬ LÝ NÚT THAM QUAN (KHÁCH)
+        const guestBtn = document.getElementById('guest-btn');
+        if (guestBtn) {
+            guestBtn.addEventListener('click', () => {
+                localStorage.setItem('bk_user_mode', 'guest');
+                localStorage.removeItem('bk_user_info');
+                window.location.replace('choncoso.html');
+            });
+        }
+    </script>
+   <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('PWA Ready:', reg.scope))
+            .catch((err) => console.error('PWA Error:', err));
+        });
+      }
+    </script>
+</body>
+</html>

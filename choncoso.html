@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Cơ Sở | BK Smart Campus Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#033285">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bk: {
+                            navy: '#0A2540',
+                            darkBlue: '#002147',
+                            blue: '#0284C7',
+                            lightBlue: '#38BDF8',
+                            ice: '#F0F9FF',
+                        }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-full flex flex-col justify-between" onclick="closeUserDropdown(event)">
+
+    <!-- HEADER SẠCH ĐẸP CÓ DROPDOWN -->
+    <header class="bg-bk-darkBlue text-white shadow-md border-b border-slate-800 relative z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Trang chủ -->
+            <div class="flex items-center space-x-3.5 cursor-pointer" onclick="window.location.href='index.html'">
+                <div class="w-10 h-10 bg-white rounded-lg p-1 flex items-center justify-center shadow">
+                    <img src="logo hcmut.png" alt="Logo HCMUT" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <span class="text-lg font-extrabold tracking-tight text-white block leading-none">BK CAMPUS MAP</span>
+                    <span class="block text-[9px] font-bold uppercase tracking-widest text-sky-400 mt-1">HCMUT Smart Navigation</span>
+                </div>
+            </div>
+
+            <!-- KHỐI ĐIỀU HƯỚNG GÓC PHẢI -->
+            <div class="flex items-center space-x-3">
+                
+                <!-- NÚT THOÁT TẠM THỜI (Quay về index.html nhưng giữ phiên) -->
+                <button id="exit-btn" title="Quay lại trang chủ" class="text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 px-3 py-1.5 rounded-xl border border-slate-700/60 text-xs font-semibold flex items-center space-x-1.5 transition-all">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Thoát</span>
+                </button>
+
+                <!-- KHỐI PROFILE / AVATAR KÈM DROPDOWN MENU -->
+                <div class="relative">
+                    <button id="user-menu-btn" class="flex items-center space-x-2.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 py-1.5 px-3 rounded-xl transition-all cursor-pointer focus:outline-none">
+                        <img id="user-avatar" src="" alt="User Avatar" class="w-7 h-7 rounded-full border border-sky-400 hidden object-cover">
+                        <div class="text-right hidden sm:block">
+                            <p id="user-name" class="text-xs font-semibold text-slate-200 leading-tight">Đang tải...</p>
+                            <p id="user-role" class="text-[9px] text-sky-400 leading-tight">sinh viên</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 ml-0.5"></i>
+                    </button>
+
+                    <!-- MENU THẢ XUỐNG (DROPDOWN) -->
+                    <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 text-slate-800 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        <div class="px-4 py-2.5 border-b border-slate-100 sm:hidden">
+                            <p id="mobile-user-name" class="text-xs font-bold text-slate-800">Sinh viên HCMUT</p>
+                            <p id="mobile-user-email" class="text-[10px] text-slate-500 truncate"></p>
+                        </div>
+                        <div class="px-4 py-2 border-b border-slate-100">
+                            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Tài khoản</span>
+                            <p id="dropdown-user-email" class="text-xs text-slate-600 truncate font-medium mt-0.5">user@hcmut.edu.vn</p>
+                        </div>
+                        <button id="logout-btn" class="w-full text-left px-4 py-2.5 text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Đăng xuất tài khoản</span>
+                        </button>
+                        
+                    </div>
+                     
+                    </div>
+                </div>
+
+            </div>
+           
+    </header>
+
+    <!-- NỘI DUNG CHỌN CƠ SỞ VỚI HÌNH ẢNH -->
+    <main class="max-w-5xl mx-auto px-4 py-12 flex-1 flex flex-col items-center justify-center w-full">
+        <div class="text-center space-y-3 mb-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-bk-navy tracking-tight">Chọn Cơ Sở Học Tập</h1>
+            <p class="text-slate-500 text-sm sm:text-base max-w-md mx-auto">Vui lòng chọn cơ sở bạn muốn tra cứu bản đồ phòng học </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+            
+            <!-- Card Cơ sở 1 -->
+            <div onclick="selectCampus('cs1')" class="group bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-bk-blue transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between">
+                <div>
+                    <!-- Khung hình ảnh Cơ sở 1 -->
+                    <div class="w-full h-48 overflow-hidden relative">
+                        <img src="coso1.jpg" alt="Cơ sở Lý Thường Kiệt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 left-3 bg-bk-navy/90 text-white font-bold text-xs px-3 py-1 rounded-lg backdrop-blur-sm">
+                            CS1
+                        </div>
+                    </div>
+
+                    <!-- Thông tin Cơ sở 1 -->
+                    <div class="p-6 space-y-2">
+                        <h2 class="text-xl font-bold text-slate-800 group-hover:text-bk-blue transition-colors">Cơ sở Lý Thường Kiệt</h2>
+                        <p class="text-xs text-slate-500 flex items-center"><i class="fa-solid fa-location-dot text-sky-500 mr-1.5"></i>268 Lý Thường Kiệt, P.14, Q.10, TP.HCM</p>
+                    </div>
+                </div>
+
+                <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-semibold text-bk-blue">
+                    <span>Vào bản đồ cơ sở 1</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1.5 transition-transform"></i>
+                </div>
+            </div>
+
+            <!-- Card Cơ sở 2 -->
+            <div onclick="selectCampus('cs2')" class="group bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-bk-blue transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between">
+                <div>
+                    <!-- Khung hình ảnh Cơ sở 2 -->
+                    <div class="w-full h-48 overflow-hidden relative">
+                        <img src="coso2.jpg" alt="Cơ sở Dĩ An" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 left-3 bg-bk-navy/90 text-white font-bold text-xs px-3 py-1 rounded-lg backdrop-blur-sm">
+                            CS2
+                        </div>
+                    </div>
+
+                    <!-- Thông tin Cơ sở 2 -->
+                    <div class="p-6 space-y-2">
+                        <h2 class="text-xl font-bold text-slate-800 group-hover:text-bk-blue transition-colors">Cơ sở Dĩ An</h2>
+                        <p class="text-xs text-slate-500 flex items-center"><i class="fa-solid fa-location-dot text-sky-500 mr-1.5"></i>Khu đô thị ĐHQG TP.HCM, Dĩ An, Bình Dương</p>
+                    </div>
+                </div>
+
+                <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-semibold text-bk-blue">
+                    <span>Vào bản đồ cơ sở 2</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1.5 transition-transform"></i>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-bk-darkBlue py-6 border-t border-slate-800 text-xs text-slate-400 text-center font-medium">
+        <div class="max-w-7xl mx-auto px-4 space-y-1">
+            <p class="text-slate-300">Dự án Smart Campus Map &bull; Trường Đại học Bách Khoa - ĐH Quốc gia TP.HCM (HCMUT)</p>
+            <p>&copy; 2026 HCMUT Student Developer Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT XỬ LÝ PHÂN QUYỀN HEADER & ĐĂNG XUẤT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXDX98b8p17vrvQu1OVhwIvqtrtKTbel0",
+            authDomain: "hcmut-smart-campus-map.firebaseapp.com",
+            projectId: "hcmut-smart-campus-map",
+            storageBucket: "hcmut-smart-campus-map.firebasestorage.app",
+            messagingSenderId: "881977232661",
+            appId: "1:881977232661:web:db0144004d14a4c116ed1c",
+            measurementId: "G-DCFK06D9CT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const userMode = localStorage.getItem('bk_user_mode');
+        const userInfo = JSON.parse(localStorage.getItem('bk_user_info') || '{}');
+
+        const profileContainer = document.getElementById('user-menu-btn').parentElement; // Khối chứa Avatar & Dropdown
+
+        // 1. KIỂM TRA PHÂN QUYỀN & HIỂN THỊ THÍCH HỢP
+        if (userMode === 'authenticated') {
+            // Người dùng đã Đăng nhập Google -> Hiển thị Profile & Dropdown
+            profileContainer.classList.remove('hidden');
+            document.getElementById('user-name').innerText = userInfo.name || 'Sinh viên HCMUT';
+            document.getElementById('user-role').innerText = 'Sinh viên';
+            document.getElementById('dropdown-user-email').innerText = userInfo.email || 'Sinh viên HCMUT';
+
+            if (userInfo.avatar) {
+                const avatar = document.getElementById('user-avatar');
+                avatar.src = userInfo.avatar;
+                avatar.classList.remove('hidden');
+            }
+        } else if (userMode === 'guest') {
+            // Chế độ Khách -> ẨN HOÀN TOÀN khối Profile/Menu Đăng xuất
+            profileContainer.classList.add('hidden');
+        } else {
+            // Chưa chọn chế độ nào -> Đẩy về index.html
+            window.location.replace('index.html');
+        }
+
+        // 2. TOGGLE DROPDOWN MENU (CHỈ KHI ĐÃ ĐĂNG NHẬP)
+        const menuBtn = document.getElementById('user-menu-btn');
+        const dropdown = document.getElementById('user-dropdown');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Đóng Dropdown khi click ra ngoài
+        window.closeUserDropdown = function(e) {
+            if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        };
+
+        // 3. NÚT THOÁT (Dùng chung cho cả Khách và Sinh viên để quay về index.html)
+        document.getElementById('exit-btn').addEventListener('click', () => {
+            localStorage.removeItem('bk_user_mode','guest');
+            window.location.replace('index.html');
+        });
+
+        // 4. NÚT ĐĂNG XUẤT TÀI KHOẢN GOOGLE (Trong Dropdown)
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (e) {
+                console.error("Lỗi đăng xuất:", e);
+            }
+            localStorage.clear();
+            window.location.replace('index.html');
+        });
+
+        // CHỌN CƠ SỞ -> CHUYỂN SANG MAP.HTML
+        window.selectCampus = function(campusId) {
+            localStorage.setItem('selected_campus', campusId);
+            window.location.href = 'map.html';
+        };
+    </script>
+    <!-- Sửa đoạn cuối choncoso.docx -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('Đã kích hoạt PWA thành công 🚀', reg.scope))
+            .catch((err) => console.error('Lỗi PWA:', err));
+        });
+      }
+    </script>
+</body>
+</html>
